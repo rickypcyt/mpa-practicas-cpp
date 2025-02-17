@@ -2,6 +2,7 @@
 using namespace std;
 #include <stdlib.h>
 
+// Declaraciones de funciones
 void entradaVariables(int &n,int &x);
 void generarVectorOG(int *V, int n, int x);
 void generarVectorVpeor(int *V, int n, int x);
@@ -11,105 +12,90 @@ int ContarVectorSinX(int *V, int n, int x);
 
 int main() {
   int n , x;
-  entradaVariables(n, x);
-  int *V = new int[n];
+  entradaVariables(n, x);  // Obtiene valores de n y x del usuario
+  int *V = new int[n];  // Crea un array dinámico de tamaño n
 
-  generarVectorOG(V, n,x);
+  generarVectorOG(V, n,x);  // Genera y muestra el vector original
+  generarVectorVpeor(V, n, x);  // Genera y muestra el vector para el peor caso
+  generarVectorVmejor(V, n, x);  // Genera y muestra el vector para el mejor caso
 
-  generarVectorVpeor(V, n, x);
-  generarVectorVmejor(V, n, x);
-
-  delete[] V;  // Liberar memoria
+  delete[] V;  // Libera la memoria asignada dinámicamente
 
   return 0;
 }
 
+// Función para obtener los valores de n y x del usuario
 void entradaVariables(int &n,int &x){
   cout << endl;
   cout << "Ingresa el valor de x:";
   cin >> x;
-
   cout << "Ingresa el valor de n:";
   cin >> n;
 }
 
+// Función para generar y mostrar el vector original
 void generarVectorOG(int *V, int n, int x) {
+  // Llena el vector con valores de 1 a n
   for (int i = 1; i <= n; i++) {
     V[i] = i;
   }
-  cout << endl;
-
-  cout << "Vector OG:" << endl;
-
+  cout << endl << "Vector OG:" << endl;
+  // Muestra el vector
   for (int i = 1; i <= n; i++) {
     cout << V[i] << " ";
   }
-  cout << endl;
-  cout << endl;
+  cout << endl << endl;
 
-    int respuestaOG = Contar(V, n, x);
-
-  cout << "En el vector OG: " << x << " aparece " << respuestaOG << " vez."
-       << endl;
-
+  // Cuenta las ocurrencias de x en el vector
+  int respuestaOG = Contar(V, n, x);
+  cout << "En el vector OG: " << x << " aparece " << respuestaOG << " vez." << endl;
 }
 
+// Función para generar y mostrar el vector del peor caso (todos los elementos son x)
 void generarVectorVpeor(int *V, int n, int x) {
+  // Llena el vector con x
   for (int i = 1; i <= n; i++) {
     V[i] = x;
   }
-  cout << endl;
-
-  cout << "Vector Caso Peor:" << endl;
-
+  cout << endl << "Vector Caso Peor:" << endl;
+  // Muestra el vector
   for (int i = 1; i <= n; i++) {
     cout << V[i] << " ";
   }
-  cout << endl;
-  cout << endl;
+  cout << endl << endl;
 
+  // Cuenta las ocurrencias de x en el vector
   int respuestaVpeor = Contar(V, n, x);
-
-  cout << "En el caso peor: " << x << " aparece " << respuestaVpeor << " veces."
-       << endl;
-
+  cout << "En el caso peor: " << x << " aparece " << respuestaVpeor << " veces." << endl;
 }
 
-// tiene que ser que x sea omitido o sea que si i == x then omit x o i mas
+// Función para generar y mostrar el vector del mejor caso (x no aparece)
 void generarVectorVmejor(int *V, int n, int x) {
-
+  // Llena el vector con valores de 1 a n, omitiendo x
   for (int i = 1; i <= n; i++) {
     if (i != x) {
       V[i] = i;
     }
   }
 
-  cout << endl;
-
-  cout << "Vector Caso Mejor:" << endl;
-
+  cout << endl << "Vector Caso Mejor:" << endl;
+  // Muestra el vector, omitiendo la posición x
   for (int i = 1; i <= n; i++) {
     if (i != x){
-    cout << V[i] << " ";
+      cout << V[i] << " ";
     }
   }
-  cout << endl;
-  cout << endl;
+  cout << endl << endl;
 
-  // Llamamos a la función Contar con el nuevo arreglo
-    int respuestaVmejor = ContarVectorSinX(V, n, x);  // Usamos result, no V
-  cout << "En el caso peor: " << x << " aparece " << respuestaVmejor << " veces."
-       << endl;
+  // Cuenta las ocurrencias de x en el vector (que deberían ser 0)
+  int respuestaVmejor = ContarVectorSinX(V, n, x);
+  cout << "En el caso mejor: " << x << " aparece " << respuestaVmejor << " veces." << endl;
 }
 
+// Función para contar las ocurrencias de x en el vector
 int Contar(int *V, int n, int x) {
-  int nveces;
-  int i;
-
-  // nveces = cuantas veces aparece x en el vector
-  nveces = 0;
-
-  for (i = 1; i <= n; i++) {
+  int nveces = 0;
+  for (int i = 1; i <= n; i++) {
     if (V[i] == x) {
       nveces++;
     }
@@ -117,16 +103,12 @@ int Contar(int *V, int n, int x) {
   return nveces;
 }
 
+// Función para contar las ocurrencias de x en el vector (siempre retorna 0)
 int ContarVectorSinX(int *V, int n, int x) {
-  int nveces;
-  int i;
-
-  // nveces = cuantas veces aparece x en el vector
-  nveces = 0;
-
-  for (i = 1; i <= n; i++) {
+  int nveces = 0;
+  for (int i = 1; i <= n; i++) {
     if (V[i] == x) {
-      nveces = nveces +0;
+      nveces = nveces + 0;  // Esta línea no tiene efecto, nveces siempre será 0
     }
   }
   return nveces;
